@@ -1,13 +1,24 @@
 // import banner from "./pages/login/img/banner_login2.svg";
 import './css/style.css'
-import { useEffect, useState } from "react";
+import {useState } from "react";
+import UserPool from '../../UserPool';
 // import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 // import {faCoffee} from '@fortawesome/free-solid-svg-icons'
 function Login() {
-
+  
+    const onSubmit = (event) => {
+      event.preventDefault();
+  
+      UserPool.signUp(Email, Senha, [], null, (err, data) => {
+        if (err) {
+          console.error(err);
+        }
+        console.log(data);
+      });
+    };
   const [Email, setEmail] = useState('')
   const [Senha, setSenha] = useState('')
-  const [Louding, stLouding] = useState(false)
+  // const [Louding, stLouding] = useState(false)
 
   const [Animaition, setAnimaition] = useState(false);
 
@@ -23,6 +34,10 @@ function Login() {
     setAnimaition(false)
     // container.classList.remove("sign-up-mode");
   };
+
+//   const AtualizaStateCampo = (campo) =>{
+//     this.setState({[campo.target.name]: campo.target.value })
+// };
 
   
   return (
@@ -40,21 +55,23 @@ function Login() {
                 <i className="fas fa-lock"></i>
                 <input type="password" placeholder="Senha" value={Senha} onChange={(evt) => setSenha(evt.target.value)} />
               </div>
-              <input type="submit" value="Login" className="btn solid" />
+              <input type="submit" value="Login" className="btn solid"  />
             </form>
-            <form action="#" className="sign-up-form">
+            <form action="#" className="sign-up-form"  onSubmit={onSubmit} >
               <h2 className="title">Cadastrar-se</h2>
               <div className="input-field">
-                <i className="fas fa-user"></i>
-                <input type="text" placeholder="Username" />
-              </div>
-              <div className="input-field">
                 <i className="fas fa-envelope"></i>
-                <input type="email" placeholder="Email" />
+                <input
+                value={Email}
+                onChange={(evt) => setSenha(evt.target.value)}
+                type="email" placeholder="Email" />
               </div>
               <div className="input-field">
                 <i className="fas fa-lock"></i>
-                <input type="password" placeholder="Password" />
+                <input
+                value={Senha}
+                onChange={(evt) => setSenha(evt.target.value)}
+                type="password" placeholder="Senha" />
               </div>
               <input type="submit" className="btn" value="Sign up" />
               <p className="social-text">
@@ -72,7 +89,7 @@ function Login() {
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit.
                 Debitis, ex ratione. Aliquid!
               </p>
-              <button onClick={addClass} className='btn transparent' id="sign-up-btn">
+              <button onClick={addClass}   className='btn transparent' id="sign-up-btn">
                 Inscreva-se
               </button>
               <img src='{banner} ' className="image" alt="" />
