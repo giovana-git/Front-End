@@ -1,30 +1,49 @@
 // import banner from "./pages/login/img/banner_login2.svg";
 import './css/style.css'
-import {useState } from "react";
+import { useState } from "react";
 import UserPool from '../../UserPool';
+// import { parseJwt, usuarioAutenticado } from '../../services/auth';
+import banner from './img/banner_login2.svg'
+import img_login from './img/logo_black.svg'
+import img_login2  from './img/undraw_cloud_files_wmo8.svg'
+import { CognitoUser,AuthenticationDetails } from 'amazon-cognito-identity-js';
 // import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 // import {faCoffee} from '@fortawesome/free-solid-svg-icons'
-function Login() {
-  
-    const onSubmit = (event) => {
-      event.preventDefault();
-  
-      UserPool.signUp(Email, Senha, [], null, (err, data) => {
-        if (err) {
-          console.error(err);
-        }
-        console.log(data);
-      });
-    };
-  const [Email, setEmail] = useState('')
-  const [Senha, setSenha] = useState('')
+const Login =() => {
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+     
+
+    const user = new CognitoUser({
+      Username: email,
+      Pool: UserPool
+
+    });
+    this.props.history.replace("/MeusProjetos")
+
+    const authDetails = new AuthenticationDetails({
+      Username: email,
+      Password: senha,
+    });
+
+    user.authenticateUser(authDetails, {
+      onSuccess: (data) => {
+        console.log("onSuccess: ", data);
+      },
+      onFailure: (err) => {
+        console.error("onFailure: ", err);
+      },
+      newPasswordRequired: (data) => {
+        console.log("newPasswordRequired: ", data);
+      },
+    })
+  }
   // const [Louding, stLouding] = useState(false)
 
   const [Animaition, setAnimaition] = useState(false);
-
-  
-  // const container = document.querySelector(".container");
-
 
   const addClass = () => {
     setAnimaition(true)
@@ -35,11 +54,6 @@ function Login() {
     // container.classList.remove("sign-up-mode");
   };
 
-//   const AtualizaStateCampo = (campo) =>{
-//     this.setState({[campo.target.name]: campo.target.value })
-// };
-
-  
   return (
     <>
       <div className= {Animaition ? 'container sign-up-mode': 'container '  }   >
@@ -49,11 +63,11 @@ function Login() {
               <h2 className="title">Logar</h2>
               <div className="input-field ">
                 <i className="fas fa-user"></i>
-                <input type="text" placeholder="Email" value={Email} onChange={(evt) => setEmail(evt.target.value)} />
+                <input type="text" placeholder="Email" value={email} onChange={(evt) => setEmail(evt.target.value)} />
               </div>
               <div className="input-field">
                 <i className="fas fa-lock"></i>
-                <input type="password" placeholder="Senha" value={Senha} onChange={(evt) => setSenha(evt.target.value)} />
+                <input type="password" placeholder="Senha" value={senha} onChange={(evt) => setSenha(evt.target.value)} />
               </div>
               <input type="submit" value="Login" className="btn solid"  />
             </form>
@@ -62,22 +76,18 @@ function Login() {
               <div className="input-field">
                 <i className="fas fa-envelope"></i>
                 <input
-                value={Email}
-                onChange={(evt) => setSenha(evt.target.value)}
-                type="email" placeholder="Email" />
+               type="text" placeholder="Email" value={email} onChange={(evt) => setEmail(evt.target.value)}/>
               </div>
               <div className="input-field">
                 <i className="fas fa-lock"></i>
                 <input
-                value={Senha}
-                onChange={(evt) => setSenha(evt.target.value)}
-                type="password" placeholder="Senha" />
+                type="password" placeholder="Senha" value={senha} onChange={(evt) => setSenha(evt.target.value)} />
               </div>
               <input type="submit" className="btn" value="Sign up" />
               <p className="social-text">
                 Ou inscreva-se em plataformas sociais
               </p>
-            </form>
+            </form>        
           </div>
         </div>
 
@@ -92,12 +102,12 @@ function Login() {
               <button onClick={addClass}   className='btn transparent' id="sign-up-btn">
                 Inscreva-se
               </button>
-              <img src='{banner} ' className="image" alt="" />
+              <img src={banner} className="image" alt="" />
             </div>
             <img src="" className="image" alt="" />
           </div>
           <div className="panel right-panel">
-            <img src="img/logo_black.svg" alt="" />
+            <img src={img_login} alt="" />
             <div className="content">
               <h3>One of us ?</h3>
               <p>
@@ -109,7 +119,7 @@ function Login() {
               </button>
             </div>
             <img
-              src="img/undraw_cloud_files_wmo8.svg"
+              src={img_login2}
               className="image"
               alt=""
             />
