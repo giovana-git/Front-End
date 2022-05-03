@@ -1,5 +1,6 @@
 // import banner from "./pages/login/img/banner_login2.svg";
 import './css/style.css'
+import { Navigate } from 'react-router-dom';
 import { useState } from "react";
 import UserPool from '../../UserPool';
 // import { parseJwt, usuarioAutenticado } from '../../services/auth';
@@ -19,27 +20,33 @@ const Login =() => {
 
     const user = new CognitoUser({
       Username: email,
-      Pool: UserPool
+      Pool: UserPool,
+  });
 
-    });
-    this.props.history.replace("/MeusProjetos")
-
-    const authDetails = new AuthenticationDetails({
+  const authDetails = new AuthenticationDetails({
       Username: email,
       Password: senha,
-    });
+  });
 
-    user.authenticateUser(authDetails, {
+  user.authenticateUser(authDetails, {
       onSuccess: (data) => {
-        console.log("onSuccess: ", data);
+          localStorage.setItem('usuario-login', data.getIdToken().getJwtToken());
+
+          Navigate("/MeusProjetos")
+
+          // toast.success("Login efetuado com sucesso!", {autoClose: 1000})
+
+
       },
       onFailure: (err) => {
-        console.error("onFailure: ", err);
+          // setMsg(true)
+          console.error("onFailure: ", err);
       },
       newPasswordRequired: (data) => {
-        console.log("newPasswordRequired: ", data);
+          // navigate("/main")
+          console.log("newPasswordRequired: ", data);
       },
-    })
+  });
   }
   // const [Louding, stLouding] = useState(false)
 
