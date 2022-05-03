@@ -1,57 +1,66 @@
 // import banner from "./pages/login/img/banner_login2.svg";
 import './css/style.css'
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useState } from "react";
 import UserPool from '../../UserPool';
 // import { parseJwt, usuarioAutenticado } from '../../services/auth';
 import banner from './img/banner_login2.svg'
 import img_login from './img/logo_black.svg'
-import img_login2  from './img/undraw_cloud_files_wmo8.svg'
-import { CognitoUser,AuthenticationDetails } from 'amazon-cognito-identity-js';
+import img_login2 from './img/undraw_cloud_files_wmo8.svg'
+import { CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js';
 // import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 // import {faCoffee} from '@fortawesome/free-solid-svg-icons'
-const Login =() => {
-  const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
 
+
+function Login() {
+  const navigate = useNavigate();
+  
   const onSubmit = (event) => {
     event.preventDefault();
-     
 
-    const user = new CognitoUser({
-      Username: email,
-      Pool: UserPool,
-  });
-
-  const authDetails = new AuthenticationDetails({
-      Username: email,
-      Password: senha,
-  });
-
-  user.authenticateUser(authDetails, {
-      onSuccess: (data) => {
-          localStorage.setItem('usuario-login', data.getIdToken().getJwtToken());
-
-          Navigate("/MeusProjetos")
-
-          // toast.success("Login efetuado com sucesso!", {autoClose: 1000})
-
-
-      },
-      onFailure: (err) => {
-          // setMsg(true)
-          console.error("onFailure: ", err);
-      },
-      newPasswordRequired: (data) => {
-          // navigate("/main")
-          console.log("newPasswordRequired: ", data);
-      },
-  });
-  }
+    UserPool.signUp(Email, Senha, [], null, (err, data) => {
+      if (err) {
+        console.error(err);
+      }
+      console.log(data);
+    });
+  };
+  const [Email, setEmail] = useState('')
+  const [Senha, setSenha] = useState('')
   // const [Louding, stLouding] = useState(false)
 
   const [Animaition, setAnimaition] = useState(false);
 
+  const user = new CognitoUser({
+    Username: Email,
+    Pool: UserPool,
+  });
+
+  const authDetails = new AuthenticationDetails({
+    Username: Email,
+    Password: Senha,
+  });
+
+  user.authenticateUser(authDetails, {
+    onSuccess: (data) => {
+      localStorage.setItem('usuario-login', data.getIdToken().getJwtToken());
+      console.log(data);
+
+      navigate("/MeusProjetos")
+
+      // toast.success("Login efetuado com sucesso!", {autoClose: 1000})
+
+
+    },
+    onFailure: (err) => {
+      // setMsg(true)
+      console.error("onFailure: ", err);
+    },
+    newPasswordRequired: (data) => {
+      // navigate("/main")
+      console.log("newPasswordRequired: ", data);
+    },
+  });
   const addClass = () => {
     setAnimaition(true)
     // container.classList.add("sign-up-mode");
@@ -61,40 +70,41 @@ const Login =() => {
     // container.classList.remove("sign-up-mode");
   };
 
+
   return (
     <>
-      <div className= {Animaition ? 'container sign-up-mode': 'container '  }   >
+      <div className={Animaition ? 'container sign-up-mode' : 'container '}   >
         <div className="forms-container">
           <div className="signin-signup">
             <form action="#" className="sign-in-form">
               <h2 className="title">Logar</h2>
               <div className="input-field ">
                 <i className="fas fa-user"></i>
-                <input type="text" placeholder="Email" value={email} onChange={(evt) => setEmail(evt.target.value)} />
+                <input type="text" placeholder="Email" value={Email} onChange={(evt) => setEmail(evt.target.value)} />
               </div>
               <div className="input-field">
                 <i className="fas fa-lock"></i>
-                <input type="password" placeholder="Senha" value={senha} onChange={(evt) => setSenha(evt.target.value)} />
+                <input type="password" placeholder="Senha" value={Senha} onChange={(evt) => setSenha(evt.target.value)} />
               </div>
-              <input type="submit" value="Login" className="btn solid"  />
+              <input type="submit" value="Login" className="btn solid" />
             </form>
-            <form action="#" className="sign-up-form"  onSubmit={onSubmit} >
+            <form action="#" className="sign-up-form" onSubmit={onSubmit} >
               <h2 className="title">Cadastrar-se</h2>
               <div className="input-field">
                 <i className="fas fa-envelope"></i>
                 <input
-               type="text" placeholder="Email" value={email} onChange={(evt) => setEmail(evt.target.value)}/>
+                  type="text" placeholder="Email" value={Email} onChange={(evt) => setEmail(evt.target.value)} />
               </div>
               <div className="input-field">
                 <i className="fas fa-lock"></i>
                 <input
-                type="password" placeholder="Senha" value={senha} onChange={(evt) => setSenha(evt.target.value)} />
+                  type="password" placeholder="Senha" value={Senha} onChange={(evt) => setSenha(evt.target.value)} />
               </div>
               <input type="submit" className="btn" value="Sign up" />
               <p className="social-text">
                 Ou inscreva-se em plataformas sociais
               </p>
-            </form>        
+            </form>
           </div>
         </div>
 
@@ -106,7 +116,7 @@ const Login =() => {
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit.
                 Debitis, ex ratione. Aliquid!
               </p>
-              <button onClick={addClass}   className='btn transparent' id="sign-up-btn">
+              <button onClick={addClass} className='btn transparent' id="sign-up-btn">
                 Inscreva-se
               </button>
               <img src={banner} className="image" alt="" />
@@ -136,5 +146,6 @@ const Login =() => {
     </>
   );
 }
+
 
 export default Login;
