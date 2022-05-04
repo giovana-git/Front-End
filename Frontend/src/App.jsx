@@ -6,7 +6,7 @@ function App() {
 
   return (
     <>
-     <p>Not Found</p>
+     <p>Home vazia</p>
     </>
   );
 }

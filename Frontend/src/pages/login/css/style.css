@@ -199,9 +199,11 @@ form.sign-in-form {
 .right-panel {
   pointer-events: none;
   padding: 3rem 12% 2rem 17%;
+  align-items: center;
 }
 .right-panel img{
-  width: 28%;
+  width: 49%;
+  margin-right: 43px;
 }
 
 .panel .content {
@@ -300,7 +302,6 @@ form.sign-in-form {
   .panel {
     flex-direction: row;
     justify-content: space-around;
-    align-items: center;
     padding: 2.5rem 8%;
     grid-column: 1 / 2;
   }

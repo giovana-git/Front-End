@@ -13,54 +13,58 @@ import { CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js';
 
 
 function Login() {
+
+  const [Email, setEmail] = useState('')
+  const [Senha, setSenha] = useState('')
+  const [Animaition, setAnimaition] = useState(false);
   const navigate = useNavigate();
-  
-  const onSubmit = (event) => {
+
+
+  const Cadastrar = (event) => {
     event.preventDefault();
 
     UserPool.signUp(Email, Senha, [], null, (err, data) => {
       if (err) {
-        console.error(err);
+        console.error(err)
+      } else {
+
+        console.log(data)
+        setEmail('')
+        setSenha('')
+
+
       }
-      console.log(data);
-    });
+    })
   };
-  const [Email, setEmail] = useState('')
-  const [Senha, setSenha] = useState('')
-  // const [Louding, stLouding] = useState(false)
 
-  const [Animaition, setAnimaition] = useState(false);
+  const onSubmit = (event) => {
+    event.preventDefault();
 
-  const user = new CognitoUser({
-    Username: Email,
-    Pool: UserPool,
-  });
+    const user = new CognitoUser({
+      Username: Email,
+      Pool: UserPool,
+    });
 
-  const authDetails = new AuthenticationDetails({
-    Username: Email,
-    Password: Senha,
-  });
+    const authDetails = new AuthenticationDetails({
+      Username: Email,
+      Password: Senha,
+    });
 
-  user.authenticateUser(authDetails, {
-    onSuccess: (data) => {
-      localStorage.setItem('usuario-login', data.getIdToken().getJwtToken());
-      console.log(data);
+    user.authenticateUser(authDetails, {
+      onSuccess: (data) => {
+        navigate("/MeusProjetos")
+        console.log("onSuccess: ", data);
+      },
+      onFailure: (err) => {
+        console.log("onFailure: ", err);
+      },
+      
 
-      navigate("/MeusProjetos")
+    });
+  }
 
-      // toast.success("Login efetuado com sucesso!", {autoClose: 1000})
 
 
-    },
-    onFailure: (err) => {
-      // setMsg(true)
-      console.error("onFailure: ", err);
-    },
-    newPasswordRequired: (data) => {
-      // navigate("/main")
-      console.log("newPasswordRequired: ", data);
-    },
-  });
   const addClass = () => {
     setAnimaition(true)
     // container.classList.add("sign-up-mode");
@@ -76,7 +80,7 @@ function Login() {
       <div className={Animaition ? 'container sign-up-mode' : 'container '}   >
         <div className="forms-container">
           <div className="signin-signup">
-            <form action="#" className="sign-in-form">
+            <form action="#" className="sign-in-form" onSubmit={onSubmit}>
               <h2 className="title">Logar</h2>
               <div className="input-field ">
                 <i className="fas fa-user"></i>
@@ -88,7 +92,7 @@ function Login() {
               </div>
               <input type="submit" value="Login" className="btn solid" />
             </form>
-            <form action="#" className="sign-up-form" onSubmit={onSubmit} >
+            <form action="#" className="sign-up-form" onSubmit={Cadastrar} >
               <h2 className="title">Cadastrar-se</h2>
               <div className="input-field">
                 <i className="fas fa-envelope"></i>

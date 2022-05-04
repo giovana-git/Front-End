@@ -3,7 +3,7 @@
  import '../../UserPool'
 
  
- function TelaProjets() {
+ function TelaProjetos() {
     
 
     
@@ -97,4 +97,4 @@
         </>
     );
 }
-export default TelaProjets;
+export default TelaProjetos;
