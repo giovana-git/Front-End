@@ -16,6 +16,7 @@ function Login() {
 
   const [Email, setEmail] = useState('')
   const [Senha, setSenha] = useState('')
+  const [Username, setUsername] = useState('')
   const [Animaition, setAnimaition] = useState(false);
   const navigate = useNavigate();
 
@@ -23,7 +24,10 @@ function Login() {
   const Cadastrar = (event) => {
     event.preventDefault();
 
-    UserPool.signUp(Email, Senha, [], null, (err, data) => {
+    UserPool.signUp(Email, Senha, [{
+      Name: 'custom:username',
+      Value: Username
+  }], null, (err, data) => {
       if (err) {
         console.error(err)
       } else {
@@ -31,6 +35,7 @@ function Login() {
         console.log(data)
         setEmail('')
         setSenha('')
+        setUsername('')
 
 
       }
@@ -94,6 +99,11 @@ function Login() {
             </form>
             <form action="#" className="sign-up-form" onSubmit={Cadastrar} >
               <h2 className="title">Cadastrar-se</h2>
+              <div className="input-field">
+                <i className="fas fa-envelope"></i>
+                <input
+                  type="text" placeholder="Username" value={Username} onChange={(evt) => setUsername(evt.target.value)} />
+              </div>
               <div className="input-field">
                 <i className="fas fa-envelope"></i>
                 <input
