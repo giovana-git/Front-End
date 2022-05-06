@@ -13,7 +13,7 @@ function TelaProjetos() {
     const [project_name, setNomeprojeto] = useState("");
 
     function buscarMeusProjetos() {
-        axios.get("http://44.204.225.182:8000/api/get_projects/rrrrr/", {
+        axios.get("http://44.204.225.182:8000/api/get_projects/", {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('usuario-login')
             }

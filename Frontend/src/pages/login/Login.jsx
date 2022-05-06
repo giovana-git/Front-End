@@ -8,6 +8,7 @@ import banner from './img/banner_login2.svg'
 import img_login from './img/logo_black.svg'
 import img_login2 from './img/undraw_cloud_files_wmo8.svg'
 import { CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js';
+import axios from "axios";
 // import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 // import {faCoffee} from '@fortawesome/free-solid-svg-icons'
 
@@ -16,7 +17,7 @@ function Login() {
 
   const [Email, setEmail] = useState('')
   const [Senha, setSenha] = useState('')
-  const [Username, setUsername] = useState('')
+  const [username, setUsername] = useState('')
   const [Animaition, setAnimaition] = useState(false);
   const navigate = useNavigate();
 
@@ -24,9 +25,27 @@ function Login() {
   const Cadastrar = (event) => {
     event.preventDefault();
 
+    axios.post("http://54.165.113.191:8080/api/create_user/", {
+            username: username
+            // username: username,
+            // project_name: project_name
+        }, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('usuario-login')
+            }
+        })
+            .then(resposta => {
+                if (resposta.status === 201) {
+                    console.log("User cadastrado");
+                    setUsername("");
+                    // setUsername([]);
+                    // setNomeprojeto([]);
+                }
+            }).catch(erro => console.log(erro))
+
     UserPool.signUp(Email, Senha, [{
       Name: 'custom:username',
-      Value: Username
+      Value: username
   }], null, (err, data) => {
       if (err) {
         console.error(err)
@@ -57,7 +76,7 @@ function Login() {
 
     user.authenticateUser(authDetails, {
       onSuccess: (data) => {
-        navigate("/MeusProjetos")
+        navigate("/CadastroServices")
         console.log("onSuccess: ", data);
       },
       onFailure: (err) => {
@@ -102,7 +121,7 @@ function Login() {
               <div className="input-field">
                 <i className="fas fa-envelope"></i>
                 <input
-                  type="text" placeholder="Username" value={Username} onChange={(evt) => setUsername(evt.target.value)} />
+                  type="text" placeholder="Username" value={username} onChange={(evt) => setUsername(evt.target.value)} />
               </div>
               <div className="input-field">
                 <i className="fas fa-envelope"></i>
