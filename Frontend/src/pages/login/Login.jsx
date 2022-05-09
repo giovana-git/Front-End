@@ -1,12 +1,12 @@
 // import banner from "./pages/login/img/banner_login2.svg";
-import './css/style.css'
+import '../../assets/css/pages/style.css'
 import { useNavigate } from 'react-router-dom';
 import { useState } from "react";
 import UserPool from '../../UserPool';
 // import { parseJwt, usuarioAutenticado } from '../../services/auth';
-import banner from './img/banner_login2.svg'
-import img_login from './img/logo_black.svg'
-import img_login2 from './img/undraw_cloud_files_wmo8.svg'
+import banner from '../../assets/img/banner_login2.svg'
+import img_login from '../../assets/img/logo_black.svg'
+import img_login2 from '../../assets/img/undraw_cloud_files_wmo8.svg'
 import { CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js';
 import axios from "axios";
 // import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
