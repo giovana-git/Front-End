@@ -16,7 +16,7 @@ root.render(
         <Route path="/Login" element={<Login />}/>
         <Route path="/MeusProjetos" element={<ListarProjetos />}/>
         <Route path="/CadastroServices" element={<CadastroForms />}/>
-        <Route path="/criarProjeto" element={<CriarProjeto />}/>
+        <Route path="/CriarProjeto" element={<CriarProjeto />}/>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
