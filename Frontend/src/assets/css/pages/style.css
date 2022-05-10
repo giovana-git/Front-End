@@ -202,8 +202,9 @@ form.sign-in-form {
   align-items: center;
 }
 .right-panel img{
-  width: 49%;
+  width: 34%;
   margin-right: 43px;
+  margin-top: 50px;
 }
 
 .panel .content {

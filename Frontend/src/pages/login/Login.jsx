@@ -8,6 +8,8 @@ import banner from '../../assets/img/banner_login2.svg'
 import img_login from '../../assets/img/logo_black.svg'
 import img_login2 from '../../assets/img/undraw_cloud_files_wmo8.svg'
 import { CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css'; 
 import axios from "axios";
 // import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 // import {faCoffee} from '@fortawesome/free-solid-svg-icons'
@@ -18,6 +20,7 @@ function Login() {
   const [Email, setEmail] = useState('')
   const [Senha, setSenha] = useState('')
   const [username, setUsername] = useState('')
+  const [loading, setLoading] = useState(false)
   const [Animaition, setAnimaition] = useState(false);
   const navigate = useNavigate();
 
@@ -26,28 +29,30 @@ function Login() {
     event.preventDefault();
 
     axios.post("http://54.165.113.191:8080/api/create_user/", {
-            username: username
-            // username: username,
-            // project_name: project_name
-        }, {
-            headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('usuario-login')
-            }
-        })
-            .then(resposta => {
-                if (resposta.status === 201) {
-                    console.log("User cadastrado");
-                    setUsername("");
-                    // setUsername([]);
-                    // setNomeprojeto([]);
-                }
-            }).catch(erro => console.log(erro))
+      username: username
+      // username: username,
+      // project_name: project_name
+    }, {
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('usuario-login')
+      }
+    })
+      .then(resposta => {
+        if (resposta.status === 201) {
+          console.log("User cadastrado");
+          setUsername("");
+          // setUsername([]);
+          // setNomeprojeto([]);
+        }
+      }).catch(erro => console.log(erro))
 
     UserPool.signUp(Email, Senha, [{
       Name: 'custom:username',
       Value: username
-  }], null, (err, data) => {
+    }], null, (err, data) => {
       if (err) {
+        setLoading(false)
+        toast.error("Cadastro não efetuado corretamente!")
         console.error(err)
       } else {
 
@@ -55,14 +60,16 @@ function Login() {
         setEmail('')
         setSenha('')
         setUsername('')
+        setLoading(false)
 
 
       }
     })
   };
 
-  const onSubmit = (event) => {
+  const EfetuarLogin = (event) => {
     event.preventDefault();
+    setLoading(true)
 
     const user = new CognitoUser({
       Username: Email,
@@ -76,13 +83,23 @@ function Login() {
 
     user.authenticateUser(authDetails, {
       onSuccess: (data) => {
-        navigate("/CadastroServices")
+        localStorage.setItem('usuario-login', data.getIdToken().getJwtToken());
+        navigate("/CriarProjeto")
         console.log("onSuccess: ", data);
+        setLoading(true)
       },
       onFailure: (err) => {
-        console.log("onFailure: ", err);
+        setLoading(false)
+        // setMsg(true)
+        console.error("onFailure: ", err);
+        toast.error("Dados inválidos!")
       },
-      
+      newPasswordRequired: (data) => {
+        setLoading(false)
+        // navigate("/main")
+        console.log("newPasswordRequired: ", data);
+    },
+
 
     });
   }
@@ -104,8 +121,8 @@ function Login() {
       <div className={Animaition ? 'container sign-up-mode' : 'container '}   >
         <div className="forms-container">
           <div className="signin-signup">
-            <form action="#" className="sign-in-form" onSubmit={onSubmit}>
-              <h2 className="title">Logar</h2>
+            <form action="#" className="sign-in-form" onSubmit={EfetuarLogin}>
+              <h2 className="title">Login</h2>
               <div className="input-field ">
                 <i className="fas fa-user"></i>
                 <input type="text" placeholder="Email" value={Email} onChange={(evt) => setEmail(evt.target.value)} />
@@ -114,7 +131,14 @@ function Login() {
                 <i className="fas fa-lock"></i>
                 <input type="password" placeholder="Senha" value={Senha} onChange={(evt) => setSenha(evt.target.value)} />
               </div>
-              <input type="submit" value="Login" className="btn solid" />
+              
+              {
+                loading === true && <button type="submit" className="btn solid">Login</button> 
+              }
+              {
+                loading === false && <button type="submit"  className="btn solid" onClick={EfetuarLogin}>Login</button>
+              }
+              <ToastContainer/>
             </form>
             <form action="#" className="sign-up-form" onSubmit={Cadastrar} >
               <h2 className="title">Cadastrar-se</h2>
@@ -133,10 +157,14 @@ function Login() {
                 <input
                   type="password" placeholder="Senha" value={Senha} onChange={(evt) => setSenha(evt.target.value)} />
               </div>
-              <input type="submit" className="btn" value="Sign up" />
               <p className="social-text">
-                Ou inscreva-se em plataformas sociais
+                <li>8 caracteres</li>
+                <li>Uma letra minúscula</li>
+                <li>Uma letra maiúscula</li>
+                <li>Um número</li>
               </p>
+              <input type="submit" className="btn" value="Sign up" />
+              
             </form>
           </div>
         </div>
@@ -145,12 +173,11 @@ function Login() {
           <div className="panel left-panel">
             <div className="content">
               <h3>Novo aqui ?</h3>
-              <p>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Debitis, ex ratione. Aliquid!
+              <p>          
+                Cadastre seu usuário para começar a realizar seus projetos!
               </p>
               <button onClick={addClass} className='btn transparent' id="sign-up-btn">
-                Inscreva-se
+                Cadastrar-se
               </button>
               <img src={banner} className="image" alt="" />
             </div>
@@ -159,13 +186,12 @@ function Login() {
           <div className="panel right-panel">
             <img src={img_login} alt="" />
             <div className="content">
-              <h3>One of us ?</h3>
+              <h3>Bora logar ?</h3>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum
-                laboriosam ad deleniti.
+                Faça o login para entrar na plataforma!
               </p>
               <button onClick={removeClass} className="btn transparent" id="sign-in-btn">
-                Sign in
+                Entrar
               </button>
             </div>
             <img
