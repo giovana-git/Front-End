@@ -11,8 +11,7 @@ phases:
       - apt install npm -y
   pre_build:
     commands:
-      - ls
-      - pwd
+      - cd Frontend
   build:
     commands:
       - curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
