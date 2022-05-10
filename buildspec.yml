@@ -1,0 +1,22 @@
+version: 0.2
+run-as: root
+
+
+phases:
+  install:
+    commands:
+      - apt update -y
+      - apt install nginx -y
+      - apt install nodejs -y
+      - apt install npm -y
+  pre_build:
+    commands:
+      - mkdir projetos
+      - cd projetos
+      - git clone -b https://github.com/Draw-And-Deploy/Front-End/tree/andrey
+      - cd Front-End/Frontend/
+  build:
+    commands:
+      - curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+      - npm i 
+      - npm run build
