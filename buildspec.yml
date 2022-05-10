@@ -13,8 +13,8 @@ phases:
     commands:
       - mkdir projetos
       - cd projetos
-      - git clone -b https://github.com/Draw-And-Deploy/Front-End/tree/andrey
       - cd Front-End/Frontend/
+      - pwd
   build:
     commands:
       - curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
