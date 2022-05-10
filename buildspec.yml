@@ -6,7 +6,6 @@ phases:
   install:
     commands:
       - apt update -y
-      - apt install nginx -y
       - apt install nodejs -y
       - apt install npm -y
   pre_build:
