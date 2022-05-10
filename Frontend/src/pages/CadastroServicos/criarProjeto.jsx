@@ -59,7 +59,7 @@ export default function CriarProjeto() {
     //RESOURCE GRUP
     function cadastrarRGroup(evento) {
         evento.preventDefault();
-        axios.post("http://44.205.5.176:8000/api/resource_group/", {
+        axios.post("http://44.192.127.163:8000/api/resource_group/", {
             rg: {
                 name: nomeGR,
                 location: regiao
@@ -88,7 +88,7 @@ export default function CriarProjeto() {
     //VIRTUAL NETWORK
     function cadastrarVnet(evento) {
         evento.preventDefault();
-        axios.post("http://44.205.5.176:8000/api/virtual_network/", {
+        axios.post("http://44.192.127.163:8000/api/virtual_network/", {
 
             vnet: {
                 name: nomeRede,
@@ -120,7 +120,7 @@ export default function CriarProjeto() {
     //SUBNET
     function cadastrarSubrede(evento) {
         evento.preventDefault();
-        axios.post("http://44.205.5.176:8000/api/subnet/", {
+        axios.post("http://44.192.127.163:8000/api/subnet/", {
 
             subnet: {
                 name: nomeSubRede,
@@ -155,7 +155,7 @@ export default function CriarProjeto() {
     //GRUPO DE SEGURANÇA
     function cadastrarGrupoSeguranca(evento) {
         evento.preventDefault();
-        axios.post("http://44.205.5.176:8000/api/security_group/", {
+        axios.post("http://44.192.127.163:8000/api/security_group/", {
 
             sg: {
                 name: nomeSeguranca,

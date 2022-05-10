@@ -5,7 +5,6 @@ import App from "./App"
 import Login from "./pages/login/Login"
 import CriarProjeto from "./pages/CadastroServicos/criarProjeto";
 import ListarProjetos from "./pages/ListagemProjetos/ListarPreojetos"
-import CadastroForms from "./pages/CadastroServicos/CadastroServices";
 import reportWebVitals from "./reportWebVitals";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -15,7 +14,6 @@ root.render(
         <Route path="/" element={<App />}/>
         <Route path="/Login" element={<Login />}/>
         <Route path="/MeusProjetos" element={<ListarProjetos />}/>
-        <Route path="/CadastroServices" element={<CadastroForms />}/>
         <Route path="/CriarProjeto" element={<CriarProjeto />}/>
       </Routes>
     </BrowserRouter>

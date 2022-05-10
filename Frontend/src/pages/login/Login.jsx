@@ -9,6 +9,8 @@ import img_login from '../../assets/img/logo_black.svg'
 import img_login2 from '../../assets/img/undraw_cloud_files_wmo8.svg'
 import { CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js';
 import axios from "axios";
+import { useForm } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
 // import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 // import {faCoffee} from '@fortawesome/free-solid-svg-icons'
 
@@ -20,33 +22,34 @@ function Login() {
   const [username, setUsername] = useState('')
   const [Animaition, setAnimaition] = useState(false);
   const navigate = useNavigate();
+  const { register, handleSubmit, errors } = useForm();
 
 
   const Cadastrar = (event) => {
     event.preventDefault();
 
     axios.post("http://54.165.113.191:8080/api/create_user/", {
-            username: username
-            // username: username,
-            // project_name: project_name
-        }, {
-            headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('usuario-login')
-            }
-        })
-            .then(resposta => {
-                if (resposta.status === 201) {
-                    console.log("User cadastrado");
-                    setUsername("");
-                    // setUsername([]);
-                    // setNomeprojeto([]);
-                }
-            }).catch(erro => console.log(erro))
+      username: username
+      // username: username,
+      // project_name: project_name
+    }, {
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('usuario-login')
+      }
+    })
+      .then(resposta => {
+        if (resposta.status === 201) {
+          console.log("User cadastrado");
+          setUsername("");
+          // setUsername([]);
+          // setNomeprojeto([]);
+        }
+      }).catch(erro => console.log(erro))
 
     UserPool.signUp(Email, Senha, [{
       Name: 'custom:username',
       Value: username
-  }], null, (err, data) => {
+    }], null, (err, data) => {
       if (err) {
         console.error(err)
       } else {
@@ -76,16 +79,20 @@ function Login() {
 
     user.authenticateUser(authDetails, {
       onSuccess: (data) => {
-        navigate("/CadastroServices")
+        navigate("/CriarProjeto")
         console.log("onSuccess: ", data);
       },
       onFailure: (err) => {
         console.log("onFailure: ", err);
       },
-      
+
+
 
     });
   }
+  // AtualizaStateCampo = (campo) =>{
+  //       this.setState({[campo.target.name]: campo.target.value })
+  //   }
 
 
 
@@ -105,7 +112,7 @@ function Login() {
         <div className="forms-container">
           <div className="signin-signup">
             <form action="#" className="sign-in-form" onSubmit={onSubmit}>
-              <h2 className="title">Logar</h2>
+              <h2 className="title">Login</h2>
               <div className="input-field ">
                 <i className="fas fa-user"></i>
                 <input type="text" placeholder="Email" value={Email} onChange={(evt) => setEmail(evt.target.value)} />
@@ -131,12 +138,12 @@ function Login() {
               <div className="input-field">
                 <i className="fas fa-lock"></i>
                 <input
-                  type="password" placeholder="Senha" value={Senha} onChange={(evt) => setSenha(evt.target.value)} />
+                  type="password" placeholder="Senha" value={Senha} onChange={(evt) => setSenha(evt.target.value)}/>
               </div>
               <input type="submit" className="btn" value="Sign up" />
-              <p className="social-text">
+              {/* <p className="social-text">
                 Ou inscreva-se em plataformas sociais
-              </p>
+              </p> */}
             </form>
           </div>
         </div>
@@ -146,11 +153,10 @@ function Login() {
             <div className="content">
               <h3>Novo aqui ?</h3>
               <p>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Debitis, ex ratione. Aliquid!
+              Cadastre seu usuário para começar a realizar seus projetos!
               </p>
               <button onClick={addClass} className='btn transparent' id="sign-up-btn">
-                Inscreva-se
+                  Cadastrar-se
               </button>
               <img src={banner} className="image" alt="" />
             </div>
@@ -159,13 +165,12 @@ function Login() {
           <div className="panel right-panel">
             <img src={img_login} alt="" />
             <div className="content">
-              <h3>One of us ?</h3>
+              <h3>Bora logar ?</h3>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum
-                laboriosam ad deleniti.
+                Faça o login para entrar na plataforma!
               </p>
               <button onClick={removeClass} className="btn transparent" id="sign-in-btn">
-                Sign in
+                Entrar
               </button>
             </div>
             <img
