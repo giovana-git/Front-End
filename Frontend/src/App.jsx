@@ -6,7 +6,7 @@ function App() {
 
   return (
     <>
-     <p>So de Zoas</p>
+     <p>Home vazia</p>
     </>
   );
 }
