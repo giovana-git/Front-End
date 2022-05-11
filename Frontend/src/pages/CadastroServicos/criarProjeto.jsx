@@ -83,7 +83,7 @@ export default function CriarProjeto() {
     //VIRTUAL NETWORK
     function cadastrarVnet(evento) {
         evento.preventDefault();
-        axios.post("http:/35.174.249.35:8000/api/virtual_network/", {
+        axios.post("http://35.174.249.35:8000/api/virtual_network/", {
 
             vnet: {
                 name: nomeRede,
@@ -148,9 +148,9 @@ export default function CriarProjeto() {
 
 
     //GRUPO DE SEGURANÇA
-    function cadastrarVirtualMachine(evento) {
+    function cadastrarGrupoSeguranca(evento) {
         evento.preventDefault();
-        axios.post("http://35.174.249.35:8000/api/virtual_machine/", {
+        axios.post("http://35.174.249.35:8000/api/security_group/", {
 
             sg: {
                 name: nomeSeguranca,
@@ -192,7 +192,7 @@ export default function CriarProjeto() {
 
 
     //VIRTUAL MACHINE
-    function cadastrarGrupoSeguranca(evento) {
+    function cadastrarVirtualMachine(evento) {
         evento.preventDefault();
         axios.post("http://35.174.249.35:8000/api/windows_virtual_machine/", {
 
@@ -270,7 +270,9 @@ export default function CriarProjeto() {
                         </div>
                         <form method='post'>
                             <label className="label" for="selecionaGR">Grupo de Recurso <strong>*</strong></label>
-                            <input id="selecionaGR" className="input inputText" list="listaGR" placeholder={{ nomeGR } ? { nomeGR } : "Selecionar GR"} value={nomeGR} onChange={(event) => setNomeGR(event.target.value)} />
+                            <input id="selecionaGR" className="input inputText" list="listaGR" placeholder="Nome do Grupo de Recursos"
+                            // placeholder={{ nomeGR } ? { nomeGR } : "Selecionar GR"} 
+                            value={nomeGR} onChange={(event) => setNomeGR(event.target.value)} />
                             <datalist id="listaGR">
                                 <option value={nomeGR} />
                             </datalist>
@@ -323,7 +325,7 @@ export default function CriarProjeto() {
                         </div>
                         <form method='post'>
                             <label className="label" for="selecionaGR_GS">Grupo de Recurso <strong>*</strong></label>
-                            <input id="selecionaGR_GS" className="input inputText" list="listaGR" placeholder={{ nomeGR } ? { nomeGR } : "Selecionar GR"} value={nomeGR} onChange={(event) => setNomeGR(event.target.value)} />
+                            <input id="selecionaGR_GS" className="input inputText" list="listaGR" placeholder="Nome do Grupo de Recursos" value={nomeGR} onChange={(event) => setNomeGR(event.target.value)} />
                             <label className="label" for="grupoSeguranca">Nome do Grupo de Segurança <strong>*</strong></label>
                             <input id="grupoSeguranca" className="input inputText" placeholder="Insira o nome do GS" value={nomeSeguranca} onChange={(event) => setNomeSeguranca(event.target.value)} />
                             <label className="label" for="protocolo">Protocolo <strong>*</strong></label>
@@ -367,9 +369,9 @@ export default function CriarProjeto() {
                         </div>
                         <form method='post'>
                             <label className="label" for="selecionaGR_VM">Grupo de Recurso <strong>*</strong></label>
-                            <input id="selecionaGR_VM" className="input inputText" list="listaGR" placeholder={{ nomeGR } ? { nomeGR } : "Selecionar GR"} value={nomeGR} onChange={(event) => setNomeGR(event.target.value)} />
+                            <input id="selecionaGR_VM" className="input inputText" list="listaGR" placeholder="Nome do Grupo de Recursos" value={nomeGR} onChange={(event) => setNomeGR(event.target.value)} />
                             <label className="label" for="selecionaGS_VM">Grupo de Segurança <strong>*</strong></label>
-                            <input id="selecionaGS_VM" className="input inputText" list="listaGS" placeholder={{ nomeSeguranca } ? { nomeSeguranca } : "Selecione o GS"} value={nomeSeguranca} onChange={(event) => setNomeSeguranca(event.target.value)} />
+                            <input id="selecionaGS_VM" className="input inputText" list="listaGS" placeholder="Insira o nome do GS" value={nomeSeguranca} onChange={(event) => setNomeSeguranca(event.target.value)} />
                             <label className="label" for="nomeVM">Nome da Máquina Virtual <strong>*</strong></label>
                             <input id="nomeVM" className="input inputText" placeholder="Insira o nome da VM" value={nomeVM} onChange={(event) => setNomeVM(event.target.value)} />
                             <label className="label" for="tamanhoVM">Tamanho da VM</label>
