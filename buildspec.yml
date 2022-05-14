@@ -20,3 +20,4 @@ phases:
     commands:
       - pwd
       - ls -l
+      - cd build
