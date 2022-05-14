@@ -10,10 +10,10 @@ phases:
       - apt install npm -y
   pre_build:
     commands:
+      - nginx -y
       - cd Frontend
   build:
     commands:
-      - nginx -y
       - curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
       - npm i 
       - npm run build
