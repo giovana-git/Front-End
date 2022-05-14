@@ -16,3 +16,7 @@ phases:
       - curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
       - npm i 
       - npm run build
+  post_build:
+    commands:
+      - pwd
+      - ls -l
