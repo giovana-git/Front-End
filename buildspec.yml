@@ -21,3 +21,4 @@ phases:
       - pwd
       - ls -l
       - cd build
+      - ls -l
