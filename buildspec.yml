@@ -23,4 +23,7 @@ phases:
       - ls -l
       - cd build
       - ls -l
+      - cd
+      - cd /var/www/html
+      - ls -l
      
