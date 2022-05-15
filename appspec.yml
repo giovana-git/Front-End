@@ -1,0 +1,11 @@
+version: 0.0
+os: linux
+
+files: 
+  - source: /codebuild/output/src195316196/src/github.com/Draw-And-Deploy/Front-End/Frontend/build destination: /var/www/html/
+
+permissions: 
+  - object: / 
+    pattern: "**" 
+    owner: ubuntu 
+    group: ubuntu
