@@ -1,7 +1,6 @@
 version: 0.2
 run-as: root
 
-
 phases:
   install:
     commands:
@@ -20,10 +19,8 @@ phases:
   post_build:
     commands:
       - pwd
-      - ls -l
-      - cd build
-      - ls -l
-      - cd
-      - cd /var/www/html
-      - ls -l
-     
+  artifacts: 
+    files:
+      - appspec.yml
+      - target/codepipeline-us-east-1-863100276726
+    discard-paths: yes
