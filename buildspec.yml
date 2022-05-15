@@ -11,16 +11,14 @@ phases:
   pre_build:
     commands:
       - cd Frontend
+      - curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
   build:
     commands:
-      - curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-      - npm i 
+      - npm install
       - npm run build
-  post_build:
-    commands:
-      - pwd
+
 artifacts: 
   files:
-    - appspec.yml
-    - target/codepipeline-us-east-1-863100276726
-  discard-paths: yes
+    - "**/*"
+  discard-paths: no
+  base-directory: build
