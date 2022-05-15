@@ -19,8 +19,8 @@ phases:
   post_build:
     commands:
       - pwd
-  artifacts: 
-    files:
-      - appspec.yml
-      - target/codepipeline-us-east-1-863100276726
-    discard-paths: yes
+artifacts: 
+  files:
+    - appspec.yml
+    - target/codepipeline-us-east-1-863100276726
+  discard-paths: yes
