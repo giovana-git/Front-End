@@ -1,18 +1,24 @@
 version: 0.2
 run-as: root
 
-
 phases:
   install:
     commands:
-      - apt update -y
-      - apt install nodejs -y
-      - apt install npm -y
+      - sudo yum update -y
+      - sudo yum install nginx -y
+      - sudo yum install nodejs -y
+      - sudo yum install npm -y
   pre_build:
     commands:
       - cd Frontend
+      - curl -sL https://rpm.nodesource.com/setup_14.x | sudo bash -
   build:
     commands:
-      - curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-      - npm i 
+      - npm install
       - npm run build
+
+artifacts: 
+  files:
+    - "**/*"
+  discard-paths: yes
+  base-directory: Frontend/build
