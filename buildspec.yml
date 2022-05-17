@@ -4,10 +4,10 @@ run-as: root
 phases:
   install:
     commands:
-      - apt update -y
-      - apt install nginx -y
-      - apt install nodejs -y
-      - apt install npm -y
+      - sudo yum update -y
+      - sudo yum install nginx -y
+      - sudo yum install nodejs -y
+      - sudo yum install npm -y
   pre_build:
     commands:
       - cd Frontend
