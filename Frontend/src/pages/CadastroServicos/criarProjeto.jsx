@@ -28,27 +28,24 @@ export default function CriarProjeto() {
     const [nomeSubRede, setNomeSubRede] = useState('');
     const [blocoIPSubrede, setBlocoIPSubrede] = useState('');
     const [nomeSeguranca, setNomeSeguranca] = useState('');
-    const [trafegoOrigem, setTrafegoOrigem] = useState('*');
+    const [trafegoOrigem, setTrafegoOrigem] = useState('0.0.0.0/0');
     const [protocolo, setProtocolo] = useState('');
-    const [porta, setPorta] = useState([]);
+    const [porta, setPorta] = useState('');
     const [username, setUsername] = useState('Carlos');
     const [project_name, setNomeprojeto] = useState('teste');
-    const [prioridade, setPrioridade] = useState([]);
+    const [prioridade, setPrioridade] = useState('');
     const [nomeVM, setNomeVM] = useState('');
     const [tamanhoVM, setTamanhoVM] = useState('');
     const [usuario, setUsuario] = useState('');
     const [senha, setSenha] = useState('');
     const [hostname, setHostname] = useState('');
+    const [user_name, setUser_name] = useState('');
 
 
-
-    // const proximo = () => {
-    //     setPassoAtual((prevState) => prevState + 1);
-    // }
-
-    // const anterior = () => {
-    //     setPassoAtual((prevState) => prevState - 1);
-    // }
+    // "MicrosoftWindowsServer",
+    //   "WindowsServer",
+    //   "2016-Datacenter",
+    //   "latest"
 
 
     //RESOURCE GRUP
@@ -161,7 +158,7 @@ export default function CriarProjeto() {
                 // rule_direction: "Inbound",
                 // rule_access: "Allow",
                 rule_protocol: protocolo,
-                rule_source_port_range: "*",
+                // rule_source_port_range: "*",
                 rule_source_address_prefix: trafegoOrigem,
                 // rule_dest_address_prefix: "*"
             },
@@ -177,15 +174,18 @@ export default function CriarProjeto() {
         })
             .then(resposta => {
                 if (resposta.status === 201) {
-                    console.log('rg cadastrado');
+                    console.log('security group cadastrado');
+                    setNomeSeguranca('');
                     setNomeGR('');
-                    setRegiao('');
+                    setPrioridade('');
+                    setPorta('');
+                    setProtocolo('');
+                    setTrafegoOrigem('');
                     setUsername('');
                     setNomeprojeto('');
-                    setTrafegoOrigem('');
-                    setProtocolo('');
-                    setPorta('');
-                    setPrioridade('');
+
+
+
                 }
             }).catch(erro => console.log(erro))
     }
@@ -219,14 +219,15 @@ export default function CriarProjeto() {
             .then(resposta => {
                 if (resposta.status === 201) {
                     console.log('VM cadastrada');
+                    setNomeVM('');
                     setNomeGR('');
-                    setRegiao('');
+                    setNomeSeguranca('');
+                    setNomeSubRede('');
+                    setTamanhoVM('');
+                    setUser_name('');
+                    setHostname('');
                     setUsername('');
                     setNomeprojeto('');
-                    setTrafegoOrigem('');
-                    setProtocolo('');
-                    setPorta('');
-                    setPrioridade('');
                 }
             }).catch(erro => console.log(erro))
     }
@@ -271,8 +272,8 @@ export default function CriarProjeto() {
                         <form method='post'>
                             <label className="label" for="selecionaGR">Grupo de Recurso <strong>*</strong></label>
                             <input id="selecionaGR" className="input inputText" list="listaGR" placeholder="Nome do Grupo de Recursos"
-                            // placeholder={{ nomeGR } ? { nomeGR } : "Selecionar GR"} 
-                            value={nomeGR} onChange={(event) => setNomeGR(event.target.value)} />
+                                // placeholder={{ nomeGR } ? { nomeGR } : "Selecionar GR"} 
+                                value={nomeGR} onChange={(event) => setNomeGR(event.target.value)} />
                             <datalist id="listaGR">
                                 <option value={nomeGR} />
                             </datalist>
@@ -337,17 +338,17 @@ export default function CriarProjeto() {
                             <label className="label" for="porta">Porta <strong>*</strong></label>
                             <input id="porta" className="input inputText" type="text" list="portasList" placeholder="Insira a Porta" value={porta} onChange={(event) => setPorta(event.target.value)} />
                             <datalist id="portasList">
-                                <option value="22" />
-                                <option value="80" />
-                                <option value="3309" />
-                                <option value="443" />
+                                <option value='22' />
+                                <option value='80' />
+                                <option value='3309' />
+                                <option value='443'/>
                             </datalist>
                             <label className="label" for="prioridade">Prioridade<strong>*</strong></label>
                             <input id="prioridade" className="input inputText" type="text" list="prioridadeList" placeholder="Informe a Prioridade" value={prioridade} onChange={(event) => setPrioridade(event.target.value)} />
                             <datalist id="prioridadeList">
-                                <option value="100" />
-                                <option value="110" />
-                                <option value="120" />
+                                <option value='100' />
+                                <option value='110'/>
+                                <option value='120' />
                             </datalist>
                             <label className="label" for="blocoIPSeguranca">Origem do Tráfego <strong>*</strong></label>
                             <input id="blocoIPSeguranca" className="input inputText" type="text" placeholder="000.000.000.000/00" value={trafegoOrigem} onChange={(event) => setTrafegoOrigem(event.target.value)} />
@@ -372,6 +373,8 @@ export default function CriarProjeto() {
                             <input id="selecionaGR_VM" className="input inputText" list="listaGR" placeholder="Nome do Grupo de Recursos" value={nomeGR} onChange={(event) => setNomeGR(event.target.value)} />
                             <label className="label" for="selecionaGS_VM">Grupo de Segurança <strong>*</strong></label>
                             <input id="selecionaGS_VM" className="input inputText" list="listaGS" placeholder="Insira o nome do GS" value={nomeSeguranca} onChange={(event) => setNomeSeguranca(event.target.value)} />
+                            <label className="label" for="nomeSubRede">Nome da Subrede</label>
+                            <input id="nomeSubRede" className="input inputText" type="text" placeholder="Insira o nome da Subede" value={nomeSubRede} onChange={(event) => setNomeSubRede(event.target.value)} />
                             <label className="label" for="nomeVM">Nome da Máquina Virtual <strong>*</strong></label>
                             <input id="nomeVM" className="input inputText" placeholder="Insira o nome da VM" value={nomeVM} onChange={(event) => setNomeVM(event.target.value)} />
                             <label className="label" for="tamanhoVM">Tamanho da VM</label>
