@@ -18,7 +18,6 @@ phases:
       - npm run build
       
   artifacts:
-    files:
       - **/*
         discard-paths: yes
         base-directory: Frontend/build
