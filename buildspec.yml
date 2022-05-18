@@ -20,6 +20,6 @@ phases:
 artifacts:
    files:
       - '**/*'
-        discard-paths: yes
-        base-directory: Frontend/build
+   discard-paths: no
+   base-directory: Frontend/build
 
