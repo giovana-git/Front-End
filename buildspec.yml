@@ -16,8 +16,4 @@ phases:
     commands:
       - npm install
       - npm run build
-      
-  artifacts:
-      - **/*
-        discard-paths: yes
-        base-directory: Frontend/build
+
