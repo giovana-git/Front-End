@@ -17,8 +17,9 @@ phases:
       - npm install
       - npm run build
       
-  artifacts:
+artifacts:
     files:
-        '**/*'
+      - '**/*'
         discard-paths: yes
         base-directory: Frontend/build
+
