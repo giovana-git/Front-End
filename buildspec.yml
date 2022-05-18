@@ -16,10 +16,9 @@ phases:
     commands:
       - npm install
       - npm run build
-
- artifacts:
-  files:
-    - BuildArtif/8DzONSn.zip
-    - appspec.yml
-      discard-paths: yes
-      base-directory: Frontend/build
+  artifacts:
+    files:
+      - BuildArtif/8DzONSn.zip
+      - appspec.yml
+        discard-paths: yes
+        base-directory: Frontend/build
