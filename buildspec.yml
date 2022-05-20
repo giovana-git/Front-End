@@ -4,8 +4,6 @@ run-as: root
 phases:
   install:
     commands:
-      - sudo yum update -y
-      - sudo yum install nginx -y
       - sudo yum install nodejs -y
       - sudo yum install npm -y
   pre_build:
