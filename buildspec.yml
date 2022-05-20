@@ -4,14 +4,14 @@ run-as: root
 phases:
   install:
     commands:
-      - sudo yum update -y
-      - sudo yum install nginx -y
-      - sudo yum install nodejs -y
-      - sudo yum install npm -y
+      - apt update -y
+      - apt install nginx -y
+      - apt install nodejs -y
+      - apt install npm -y
   pre_build:
     commands:
       - cd Frontend
-      - curl -sL https://rpm.nodesource.com/setup_14.x | sudo bash -
+      - node -v || curl -sL https://deb.nodesource.com/setup_14.x | sudo bash - && apt -y install nodejs
   build:
     commands:
       - npm install
@@ -22,4 +22,3 @@ artifacts:
       - '**/*'
    discard-paths: no
    base-directory: Frontend/build
-
