@@ -84,7 +84,7 @@ function Login() {
     user.authenticateUser(authDetails, {
       onSuccess: (data) => {
         localStorage.setItem('usuario-login', data.getIdToken().getJwtToken());
-        navigate("/CriarProjeto")
+        navigate("/criar-recursos")
         console.log("onSuccess: ", data);
         setLoading(true)
       },

@@ -19,7 +19,7 @@ import securityIcon from '../../assets/img/security-group-img.svg'
 import VM from '../../assets/img/virtual-machine-img.svg'
 
 
-export default function CriarProjeto() {
+export default function CriarRecurso() {
     // const [passoAtual, setPassoAtual] = useState(0);
     const [nomeGR, setNomeGR] = useState('');
     const [regiao, setRegiao] = useState('East US');
@@ -67,7 +67,7 @@ export default function CriarProjeto() {
             }
         })
             .then(resposta => {
-                if (resposta.status === 201) {
+                if (resposta.status === 200) {
                     console.log('rg cadastrado');
                     setNomeGR('');
                     setRegiao('');
@@ -97,7 +97,7 @@ export default function CriarProjeto() {
             }
         })
             .then(resposta => {
-                if (resposta.status === 201) {
+                if (resposta.status === 200) {
                     console.log('vnet cadastrada');
                     setNomeRede('');
                     setNomeGR('');
@@ -131,7 +131,7 @@ export default function CriarProjeto() {
             }
         })
             .then(resposta => {
-                if (resposta.status === 201) {
+                if (resposta.status === 200) {
                     console.log("SUBNET cadastrada");
                     setNomeGR('');
                     setNomeRede('');
@@ -173,7 +173,7 @@ export default function CriarProjeto() {
             }
         })
             .then(resposta => {
-                if (resposta.status === 201) {
+                if (resposta.status === 200) {
                     console.log('security group cadastrado');
                     setNomeSeguranca('');
                     setNomeGR('');
@@ -192,7 +192,7 @@ export default function CriarProjeto() {
 
 
     //VIRTUAL MACHINE
-    function cadastrarVirtualMachine(evento) {
+    function cadastrarVirtualMachineWindows(evento) {
         evento.preventDefault();
         axios.post("http://35.174.249.35:8000/api/windows_virtual_machine/", {
 
@@ -217,7 +217,7 @@ export default function CriarProjeto() {
             }
         })
             .then(resposta => {
-                if (resposta.status === 201) {
+                if (resposta.status === 200) {
                     console.log('VM cadastrada');
                     setNomeVM('');
                     setNomeGR('');
@@ -231,6 +231,46 @@ export default function CriarProjeto() {
                 }
             }).catch(erro => console.log(erro))
     }
+
+    function Apply(evento) {
+        evento.preventDefault();
+        axios.post("http://35.174.249.35:8000/api/apply/", {
+            username: username,
+            project_name: project_name
+        }, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('usuario-login')
+            }
+        })
+            .then(resposta => {
+                if (resposta.status === 200) {
+                    console.log('apply feita com sucesso');
+                    setUsername('');
+                    setNomeprojeto('');
+                }
+            }).catch(erro => console.log(erro))
+    }
+    function DeletarProjeto(evento) {
+        evento.preventDefault();
+        axios.delete("http://35.174.249.35:8000/api/destroy/"+ username + "/" + project_name + "/",
+            // {
+            //     username: username,
+            //     project_name: project_name   
+            // }, 
+            {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('usuario-login')
+            }
+        })
+            .then(resposta => {
+                if (resposta.status === 200) {
+                    console.log('projeto deletado');
+                    setUsername('');
+                    setNomeprojeto('');
+                }
+            }).catch(erro => console.log(erro))
+    }
+
 
     return (
         <>
@@ -341,13 +381,13 @@ export default function CriarProjeto() {
                                 <option value='22' />
                                 <option value='80' />
                                 <option value='3309' />
-                                <option value='443'/>
+                                <option value='443' />
                             </datalist>
                             <label className="label" for="prioridade">Prioridade<strong>*</strong></label>
                             <input id="prioridade" className="input inputText" type="text" list="prioridadeList" placeholder="Informe a Prioridade" value={prioridade} onChange={(event) => setPrioridade(event.target.value)} />
                             <datalist id="prioridadeList">
                                 <option value='100' />
-                                <option value='110'/>
+                                <option value='110' />
                                 <option value='120' />
                             </datalist>
                             <label className="label" for="blocoIPSeguranca">Origem do Tráfego <strong>*</strong></label>
@@ -394,23 +434,17 @@ export default function CriarProjeto() {
 
                             <div className='botoes'>
                                 {/* <input className="btnVoltar" type="submit" value="Voltar" /> */}
-                                <input className="btnProx" type="submit" value="Cadastrar" onClick={cadastrarVirtualMachine} />
+                                <input className="btnProx" type="submit" value="Cadastrar" onClick={cadastrarVirtualMachineWindows} />
                             </div>
                         </form>
                     </div>
-                    {/* </>
-                            )
-                        }
-                        {
-                            passos[passoAtual].id === "passo2"(
-                                
-                            )
-                        }
-                        {
-                            passos[passoAtual].id === "passo3"(
-                                //
-                            )
-                        } */}
+                    <div className='div_apply'>
+                        <div>
+                            <input className="btnProxU" type="submit" value="Apply" onClick={Apply} />
+                            <input className="btnProxUX" type="submit" value="Deletar" onClick={DeletarProjeto}/>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </>

@@ -2,8 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/login/Login"
-import CriarProjeto from "./pages/CadastroServicos/criarRecursos";
-import ListarProjetos from "./pages/ListagemProjetos/ListarPreojetos"
+import TelaProjetos from "./pages/ListagemProjetos/ListarProjetos"
 import reportWebVitals from "./reportWebVitals";
 import CriarRecurso from "./pages/CadastroServicos/criarRecursos";
 
@@ -16,8 +15,8 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />}/>
-        <Route path="/MeusProjetos" element={<ListarProjetos />}/>
-        <Route path="/criar-recursos" element={<CriarRecurso />}/>
+        <Route path="/meus_projetos" element={<TelaProjetos />}/>
+        <Route path="/criar_recursos" element={<CriarRecurso />}/>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

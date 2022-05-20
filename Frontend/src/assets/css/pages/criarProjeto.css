@@ -88,6 +88,19 @@
     padding: 8px 12px 8px 12px;
     box-shadow: var(--shadow)
 }
+.btnProxUX {
+    align-self: end;
+    font-size: 1rem;
+    font-family: 'Roboto';
+    font-weight: bold;
+    color: white;
+    background-color: red;
+    margin-top: 2rem;
+    padding: 8px 12px 8px 12px;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    
+}
 
 .botoes {
     width: 100%;
