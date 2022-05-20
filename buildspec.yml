@@ -22,4 +22,3 @@ artifacts:
       - '**/*'
    discard-paths: no
    base-directory: Frontend/build
-
