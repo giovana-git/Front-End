@@ -1,3 +1,3 @@
 #!/bin/bash
 set -e
-apt install -y nginx
+yum install -y nginx
