@@ -70,7 +70,7 @@ export default function CriarRecurso() {
                 if (resposta.status === 200) {
                     // return({ message: 'Projeto criado com sucesso!' });
                     console.log('rg cadastrado');
-                    setNomeGR('');
+                    setNomeGR(nomeGR);
                     setRegiao('');
                     setUsername('');
                     setNomeprojeto('');
@@ -100,8 +100,8 @@ export default function CriarRecurso() {
             .then(resposta => {
                 if (resposta.status === 200) {
                     console.log('vnet cadastrada');
-                    setNomeRede('');
-                    setNomeGR('');
+                    setNomeRede(nomeRede);
+                    setNomeGR(nomeGR);
                     setUsername('');
                     setNomeprojeto('');
                     setBlocoIP('');
@@ -134,9 +134,9 @@ export default function CriarRecurso() {
             .then(resposta => {
                 if (resposta.status === 200) {
                     console.log("SUBNET cadastrada");
-                    setNomeGR('');
-                    setNomeRede('');
-                    setNomeSubRede('');
+                    setNomeGR(nomeGR);
+                    setNomeRede(nomeRede);
+                    setNomeSubRede(nomeSubRede);
                     setUsername('');
                     setNomeprojeto('');
                     setBlocoIPSubrede('');
@@ -176,8 +176,8 @@ export default function CriarRecurso() {
             .then(resposta => {
                 if (resposta.status === 200) {
                     console.log('security group cadastrado');
-                    setNomeSeguranca('');
-                    setNomeGR('');
+                    setNomeSeguranca(nomeSeguranca);
+                    setNomeGR(nomeGR);
                     setPrioridade('');
                     setPorta('');
                     setProtocolo('');
@@ -221,9 +221,9 @@ export default function CriarRecurso() {
                 if (resposta.status === 200) {
                     console.log('VM cadastrada');
                     setNomeVM('');
-                    setNomeGR('');
-                    setNomeSeguranca('');
-                    setNomeSubRede('');
+                    setNomeGR(nomeGR);
+                    setNomeSeguranca(nomeSeguranca);
+                    setNomeSubRede(nomeSubRede);
                     setTamanhoVM('');
                     setUser_name('');
                     setHostname('');
@@ -253,16 +253,16 @@ export default function CriarRecurso() {
     }
     function DeletarProjeto(evento) {
         evento.preventDefault();
-        axios.delete("http://35.174.249.35:8000/api/destroy/"+ username + "/" + project_name + "/",
+        axios.delete("http://35.174.249.35:8000/api/destroy/" + username + "/" + project_name + "/",
             // {
             //     username: username,
             //     project_name: project_name   
             // }, 
             {
-            headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('usuario-login')
-            }
-        })
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('usuario-login')
+                }
+            })
             .then(resposta => {
                 if (resposta.status === 200) {
                     console.log('projeto deletado');
@@ -370,20 +370,26 @@ export default function CriarRecurso() {
                             <input id="selecionaGR_GS" className="input inputText" list="listaGR" placeholder="Nome do Grupo de Recursos" value={nomeGR} onChange={(event) => setNomeGR(event.target.value)} />
                             <label className="label" for="grupoSeguranca">Nome do Grupo de Segurança <strong>*</strong></label>
                             <input id="grupoSeguranca" className="input inputText" placeholder="Insira o nome do GS" value={nomeSeguranca} onChange={(event) => setNomeSeguranca(event.target.value)} />
-                            <label className="label" for="protocolo">Protocolo <strong>*</strong></label>
-                            <input id="protocolo" className="input inputText" list='protocoloList' type="text" placeholder="Protocolo" value={protocolo} onChange={(event) => setProtocolo(event.target.value)} />
-                            <datalist id="protocoloList">
-                                <option value="TCP" />
-                                <option value="UDP" />
-                            </datalist>
-                            <label className="label" for="porta">Porta <strong>*</strong></label>
-                            <input id="porta" className="input inputText" type="text" list="portasList" placeholder="Insira a Porta" value={porta} onChange={(event) => setPorta(event.target.value)} />
-                            <datalist id="portasList">
-                                <option value='22' />
-                                <option value='80' />
-                                <option value='3309' />
-                                <option value='443' />
-                            </datalist>
+                            <div className='form_dividido'>
+                                <div className='protocolo'>
+                                    <label className="label" for="protocolo">Protocolo <strong>*</strong></label>
+                                    <input id="protocolo" className="input inputText" style={{width: 135}} list='protocoloList' type="text" placeholder="Protocolo" value={protocolo} onChange={(event) => setProtocolo(event.target.value)} />
+                                    <datalist id="protocoloList">
+                                        <option value="TCP" />
+                                        <option value="UDP" />
+                                    </datalist>
+                                </div>
+                                <div className='porta'>
+                                    <label className="label" for="porta">Porta <strong>*</strong></label>
+                                    <input id="porta" className="input inputText" style={{width: 135}} type="text" list="portasList" placeholder="Insira a Porta" value={porta} onChange={(event) => setPorta(event.target.value)} />
+                                    <datalist id="portasList">
+                                        <option value='22' />
+                                        <option value='80' />
+                                        <option value='3309' />
+                                        <option value='443' />
+                                    </datalist>
+                                </div>
+                            </div>
                             <label className="label" for="prioridade">Prioridade<strong>*</strong></label>
                             <input id="prioridade" className="input inputText" type="text" list="prioridadeList" placeholder="Informe a Prioridade" value={prioridade} onChange={(event) => setPrioridade(event.target.value)} />
                             <datalist id="prioridadeList">
@@ -442,7 +448,7 @@ export default function CriarRecurso() {
                     <div className='div_apply'>
                         <div>
                             <input className="btnProxU" type="submit" value="Apply" onClick={Apply} />
-                            <input className="btnProxUX" type="submit" value="Deletar" onClick={DeletarProjeto}/>
+                            <input className="btnProxUX" type="submit" value="Deletar" onClick={DeletarProjeto} />
                         </div>
 
                     </div>

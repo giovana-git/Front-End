@@ -184,7 +184,7 @@ function Login() {
             <img src="" className="image" alt="" />
           </div>
           <div className="panel right-panel">
-            <img src={img_login} alt="" />
+            {/* <img src={img_login} alt="" /> */}
             <div className="content">
               <h3>Bora logar ?</h3>
               <p>

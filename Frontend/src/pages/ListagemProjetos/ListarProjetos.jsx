@@ -101,6 +101,7 @@ function TelaProjetos() {
                     console.log("projeto cadastrado");
                     setUsername([]);
                     setNomeprojeto([]);
+                    navigate('/criar_recursos', { state: {message: 'Projeto criado com sucesso!'} })
                 }
             }).catch(erro => console.log(erro))
     }
