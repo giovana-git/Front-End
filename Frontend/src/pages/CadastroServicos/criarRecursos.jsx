@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import axios from 'axios';
 // Componentes
 import Header from '../../components/header/header'
-
 //css
 import '../../assets/css/pages/criarProjeto.css'
 
@@ -66,8 +65,10 @@ export default function CriarRecurso() {
                 'Authorization': 'Bearer ' + localStorage.getItem('usuario-login')
             }
         })
+
             .then(resposta => {
                 if (resposta.status === 200) {
+                    // return({ message: 'Projeto criado com sucesso!' });
                     console.log('rg cadastrado');
                     setNomeGR('');
                     setRegiao('');

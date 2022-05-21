@@ -131,11 +131,6 @@ function TelaProjetos() {
         navigate('/criar_recursos')
 
     }
-    // const Navegate_Create = (event) => {
-    //     event.preventDefault();
-    //     navigate('/criar_recursos')
-
-    // }
 
     return (
         <>
@@ -166,7 +161,7 @@ function TelaProjetos() {
                     <button onClick={closeModal}>Close</button>
                 </Modal> */}
                 <div className="Meus_proje_Area">
-                    <img src="" alt="" />
+                    {/* <img src="" alt="" /> */}
                     <div className="conteiner">
                         <h1>Meus Projetos</h1>
                         {

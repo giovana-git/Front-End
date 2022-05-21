@@ -18,11 +18,11 @@ export default function Header() {
     }
     const logout = () => {
         const user = Pool.getCurrentUser();
-        if(user){
-          user.signOut();
-          navigate('/');
+        if (user) {
+            user.signOut();
+            navigate('/');
         }
-      }
+    }
 
     return (
         <div>
@@ -31,12 +31,12 @@ export default function Header() {
                     <img src={Logo} alt="" />
                 </div>
                 <div className="M_P_Right">
-                    {/* <Link to="/perfil"> /}
-                        <img src={Profile} alt="" onClick={Navigate}/>
-                    {/ </Link>
-                    <Link to="/"> /}
+                    {/* <Link to="/perfil"> */}
+                        <img src={Profile} alt="" onClick={Navigate} />
+                    {/* </Link>
+                    <Link to="/"> */}
                         <img src={Logout} alt="" onClick={logout} />
-                    {/ </Link> */}
+                    {/* </Link> */}
                 </div>
             </header>
         </div>
